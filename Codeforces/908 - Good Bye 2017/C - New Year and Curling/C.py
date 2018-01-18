@@ -7,7 +7,8 @@ class Pair:
         self.y = y
 
     def __str__(self):
-        return "(x:" + str(self.x) + ", y:" + str(self.y) + ")"
+        #return "(x:" + str(self.x) + ", y:" + str(self.y) + ")"
+        return str(self.y)
 
 def calculateDistance():
     global n, r, positions
@@ -17,15 +18,15 @@ def calculateDistance():
         if i > 0: 
             _positions = sorted(positions[0:i], key=operator.attrgetter('y'), reverse=True)
             matchPosition = None
-            for j in range(len(_positions)):
+            for j in range(i):
                 dt = abs( positions[i].x - _positions[j].x )
-                if dt <= 2*r : #Choque
+                if dt <= 2*r: #Choque
                     matchPosition = Pair(_positions[j].x, _positions[j].y)
                     break
             
             if matchPosition != None: # Hubo un choque con matchPosition
                 a = abs( positions[i].x - matchPosition.x )
-                b = ( 4*r**2 - a**2 ) ** (0.5)
+                b = ( ( 4*r**2 - a**2 ) ** (0.5) ) + matchPosition.y
         positions[i] = Pair(positions[i].x, b)
     return positions
 
